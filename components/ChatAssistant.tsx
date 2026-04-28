@@ -1,28 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  FloatButton, 
-  Card, 
-  Input, 
-  Button, 
-  Avatar, 
-  Badge, 
-  List, 
-  Typography, 
-  Space,
-  Divider,
-  Tag
-} from 'antd';
-import { 
-  MessageOutlined, 
-  SendOutlined, 
-  CloseOutlined, 
-  RobotOutlined,
-  UserOutlined,
-  ShoppingOutlined,
-  ReloadOutlined
-} from '@ant-design/icons';
+import { FloatButton, Card, Typography } from 'antd';
+import { MessageOutlined } from '@ant-design/icons';
+import ChatHeader from './chat/ChatHeader';
+import ChatMessage from './chat/ChatMessage';
+import ChatInput from './chat/ChatInput';
 
 const { Text } = Typography;
 
@@ -62,7 +45,6 @@ export default function ChatAssistant() {
     }
   }, [messages, loading]);
 
-
   const handleSend = async (text: string = inputValue) => {
     if (!text.trim()) return;
 
@@ -99,21 +81,16 @@ export default function ChatAssistant() {
     }
   };
 
-  const quickActions = [
-    { label: 'Track Order', icon: <ShoppingOutlined /> },
-    { label: 'Return Policy', icon: <ReloadOutlined /> },
-  ];
-
   return (
     <>
       <div className={`chat-trigger ${!visible ? 'pulse' : ''}`} style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 2000 }}>
         {!visible && (
-          <div style={{ 
-            position: 'absolute', 
-            bottom: '70px', 
-            right: 0, 
-            background: 'white', 
-            padding: '8px 16px', 
+          <div style={{
+            position: 'absolute',
+            bottom: '70px',
+            right: 0,
+            background: 'white',
+            padding: '8px 16px',
             borderRadius: '12px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             whiteSpace: 'nowrap',
@@ -122,14 +99,14 @@ export default function ChatAssistant() {
             animation: 'fadeIn 0.5s ease-out'
           }}>
             👋 Need help finding something?
-            <div style={{ 
-              position: 'absolute', 
-              bottom: '-6px', 
-              right: '24px', 
-              width: '12px', 
-              height: '12px', 
-              background: 'white', 
-              transform: 'rotate(45deg)' 
+            <div style={{
+              position: 'absolute',
+              bottom: '-6px',
+              right: '24px',
+              width: '12px',
+              height: '12px',
+              background: 'white',
+              transform: 'rotate(45deg)'
             }} />
           </div>
         )}
@@ -141,7 +118,6 @@ export default function ChatAssistant() {
           badge={{ dot: true, color: 'green' }}
         />
       </div>
-
 
       {visible && (
         <Card
@@ -161,38 +137,14 @@ export default function ChatAssistant() {
           }}
           bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
         >
-          {/* Header */}
-          <div style={{ 
-            padding: '16px 20px', 
-            background: 'var(--primary)', 
-            color: 'white', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'space-between' 
-          }}>
-            <Space>
-              <Badge dot color="green" offset={[-2, 32]}>
-                <Avatar icon={<RobotOutlined />} style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} />
-              </Badge>
-              <div>
-                <Text strong style={{ color: 'white', display: 'block', lineHeight: 1.2 }}>Elevate AI</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>Always online</Text>
-              </div>
-            </Space>
-            <Button 
-              type="text" 
-              icon={<CloseOutlined style={{ color: 'white' }} />} 
-              onClick={() => setVisible(false)} 
-            />
-          </div>
+          <ChatHeader onClose={() => setVisible(false)} />
 
-          {/* Messages Area */}
-          <div 
+          <div
             ref={scrollRef}
-            style={{ 
-              flex: 1, 
-              padding: '20px', 
-              overflowY: 'auto', 
+            style={{
+              flex: 1,
+              padding: '20px',
+              overflowY: 'auto',
               background: '#f9f9f9',
               display: 'flex',
               flexDirection: 'column',
@@ -200,28 +152,7 @@ export default function ChatAssistant() {
             }}
           >
             {messages.map((msg) => (
-              <div 
-                key={msg.id} 
-                style={{ 
-                  alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                  maxWidth: '80%'
-                }}
-              >
-                <div style={{ 
-                  padding: '12px 16px', 
-                  borderRadius: msg.sender === 'user' ? '18px 18px 0 18px' : '18px 18px 18px 0',
-                  background: msg.sender === 'user' ? 'var(--primary)' : 'white',
-                  color: msg.sender === 'user' ? 'white' : '#333',
-                  boxShadow: msg.sender === 'ai' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none',
-                  fontSize: '14px',
-                  lineHeight: 1.5
-                }}>
-                  {msg.text}
-                </div>
-                <Text type="secondary" style={{ fontSize: '10px', marginTop: '4px', display: 'block', textAlign: msg.sender === 'user' ? 'right' : 'left' }}>
-                  {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </Text>
-              </div>
+              <ChatMessage key={msg.id} {...msg} />
             ))}
             {loading && (
               <div style={{ alignSelf: 'flex-start', background: 'white', padding: '12px 16px', borderRadius: '18px 18px 18px 0', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
@@ -230,36 +161,12 @@ export default function ChatAssistant() {
             )}
           </div>
 
-          {/* Input Area */}
-          <div style={{ padding: '16px', background: 'white' }}>
-            <Space wrap style={{ marginBottom: '12px' }}>
-              {quickActions.map(action => (
-                <Tag 
-                  key={action.label} 
-                  style={{ cursor: 'pointer', borderRadius: '12px', padding: '4px 12px' }}
-                  onClick={() => handleSend(action.label)}
-                >
-                  {action.icon} {action.label}
-                </Tag>
-              ))}
-            </Space>
-            <Input
-              placeholder="Ask me anything..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onPressEnter={() => handleSend()}
-              suffix={
-                <Button 
-                  type="primary" 
-                  shape="circle" 
-                  icon={<SendOutlined />} 
-                  onClick={() => handleSend()} 
-                  disabled={!inputValue.trim()}
-                />
-              }
-              style={{ borderRadius: '24px', padding: '4px 4px 4px 16px' }}
-            />
-          </div>
+          <ChatInput 
+            value={inputValue} 
+            onChange={setInputValue} 
+            onSend={handleSend} 
+            loading={loading} 
+          />
         </Card>
       )}
 
@@ -270,6 +177,7 @@ export default function ChatAssistant() {
         }
         .pulse {
           animation: pulse-animation 2s infinite;
+          border-radius: 50%;
         }
         @keyframes pulse-animation {
           0% { box-shadow: 0 0 0 0px rgba(22, 119, 255, 0.4); }
@@ -277,12 +185,12 @@ export default function ChatAssistant() {
         }
         .chat-trigger {
           transition: all 0.3s ease;
+          border-radius: 50%;
         }
         .chat-trigger:hover {
           transform: scale(1.05);
         }
       `}</style>
     </>
-
   );
 }

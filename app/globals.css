@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -30,64 +34,38 @@ body {
   overflow-x: hidden;
 }
 
-.glass-nav {
-  background: transparent;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
-}
-
-.glass-nav.scrolled {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-}
-
-.hero-gradient {
-  background: radial-gradient(circle at 50% 50%, rgba(22, 119, 255, 0.08) 0%, #ffffff 70%);
-  position: relative;
-  overflow: hidden;
-}
-
-
-.product-card {
-  transition: all 0.3s ease;
-  border: 1px solid transparent !important;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
-  border-color: var(--primary) !important;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+/* Glass Effect Utilities */
+@layer components {
+  .glass-nav {
+    @apply transition-all duration-300 ease-in-out z-[1000];
+    background: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
   }
 
-  50% {
-    transform: translateY(-20px);
+  .glass-nav.scrolled {
+    @apply backdrop-blur-md border-b shadow-sm;
+    background: var(--glass-bg) !important;
+    border-color: var(--glass-border) !important;
+  }
+  
+  .hero-gradient {
+    @apply relative overflow-hidden;
+    background: radial-gradient(circle at 50% 50%, rgba(22, 119, 255, 0.08) 0%, #ffffff 70%);
   }
 
-  100% {
-    transform: translateY(0px);
+  .product-card {
+    @apply transition-all duration-300 border border-transparent !important;
+  }
+
+  .product-card:hover {
+    @apply -translate-y-2 shadow-2xl border-primary !important;
+  }
+
+  .footer {
+    @apply bg-[#f9f9f9] py-20 pb-10;
   }
 }
 
-.footer {
-  background: #f9f9f9;
-  padding: 80px 0 40px;
-}
-
-[data-theme='dark'] .footer {
-  background: #050505;
-}
+/* Custom Keyframes are now in tailwind.config.ts */
