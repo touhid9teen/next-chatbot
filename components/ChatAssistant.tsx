@@ -121,19 +121,19 @@ export default function ChatAssistant() {
 
       {visible && (
         <Card
+          className="chat-card"
           style={{
             position: 'fixed',
             right: 24,
             bottom: 100,
-            width: 380,
-            height: 550,
             zIndex: 2000,
             boxShadow: '0 12px 48px rgba(0,0,0,0.15)',
             borderRadius: '20px',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            padding: 0
+            padding: 0,
+            transition: 'all 0.3s ease'
           }}
           bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
         >
@@ -189,6 +189,22 @@ export default function ChatAssistant() {
         }
         .chat-trigger:hover {
           transform: scale(1.05);
+        }
+        .chat-card {
+          width: 380px;
+          height: 550px;
+        }
+        @media (max-width: 768px) {
+          .chat-card {
+            width: calc(100vw - 40px) !important;
+            height: 60vh !important;
+            right: 20px !important;
+            bottom: 90px !important;
+          }
+          .chat-trigger {
+            right: 20px !important;
+            bottom: 20px !important;
+          }
         }
       `}</style>
     </>

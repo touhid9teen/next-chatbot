@@ -9,8 +9,8 @@ const { Title, Text, Paragraph } = Typography;
 
 export default function Footer() {
   return (
-    <AntFooter className="footer bg-[#f9f9f9] pt-20 pb-10">
-      <Row gutter={[48, 48]} className="px-[5%]">
+    <AntFooter className="footer bg-[#f9f9f9] pt-16 md:pt-20 pb-10">
+      <Row gutter={[{ xs: 24, sm: 32, lg: 48 }, { xs: 32, sm: 48 }]} className="px-4 md:px-[5%]">
         <Col xs={24} sm={12} lg={6}>
           <Title level={4} className="!mb-6">ELEVATE</Title>
           <Paragraph className="text-gray-500">
@@ -52,20 +52,32 @@ export default function Footer() {
         </Col>
       </Row>
       
-      <div className="px-[5%] pt-20">
-        <section className="p-16 bg-primary text-white rounded-[32px] text-center">
-          <Title level={2} className="!text-white !text-[32px] !font-extrabold">Join the Elite Club</Title>
-          <Paragraph className="!text-white/80 !text-base !mb-8">
+      <div className="px-4 md:px-[5%] pt-16 md:pt-20">
+        <section className="p-8 md:p-16 bg-primary text-white rounded-[24px] md:rounded-[32px] text-center">
+          <Title level={2} className="!text-white !text-2xl md:!text-[32px] !font-extrabold">Join the Elite Club</Title>
+          <Paragraph className="!text-white/80 !text-sm md:!text-base !mb-8">
             Get early access to new drops and exclusive member-only pricing.
           </Paragraph>
-          <Space direction="vertical" size="middle" className="w-full max-w-[400px]">
-            <Input
-              size="large"
-              placeholder="Enter your email"
-              className="!rounded-xl !h-14"
-              suffix={<Button type="primary" className="!rounded-lg">Subscribe</Button>}
-            />
-          </Space>
+          <div className="w-full max-w-[400px] mx-auto">
+            <div className="hidden sm:block">
+              <Input
+                size="large"
+                placeholder="Enter your email"
+                className="!rounded-xl !h-14 overflow-hidden"
+                suffix={<Button type="primary" className="!rounded-lg">Subscribe</Button>}
+              />
+            </div>
+            <div className="sm:hidden space-y-4">
+              <Input
+                size="large"
+                placeholder="Enter your email"
+                className="!rounded-xl !h-14"
+              />
+              <Button type="default" size="large" className="w-full !bg-white !text-primary !border-none !rounded-xl !h-14 !font-bold">
+                Subscribe
+              </Button>
+            </div>
+          </div>
         </section>
       </div>
 

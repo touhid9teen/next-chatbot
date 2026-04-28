@@ -24,13 +24,6 @@ export default function LandingPage() {
 
       <ChatAssistant />
 
-      <style jsx global>{`
-        @media (max-width: 768px) {
-          .hidden-mobile {
-            display: none !important;
-          }
-        }
-      `}</style>
     </Layout>
   );
 }

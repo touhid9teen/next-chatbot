@@ -40,13 +40,13 @@ const products = [
 
 export default function ProductGrid() {
   return (
-    <section className="px-[5%] py-24">
-      <div className="text-center mb-16">
-        <Title level={2} className="!font-extrabold !text-[40px] !mb-4">Featured Collection</Title>
-        <Text className="text-gray-500 text-lg">Meticulously crafted for those who demand excellence.</Text>
+    <section className="px-4 md:px-[5%] py-16 md:py-24">
+      <div className="text-center mb-16 px-4">
+        <Title level={2} className="!font-extrabold !text-3xl md:!text-[40px] !mb-4">Featured Collection</Title>
+        <Text className="text-gray-500 text-base md:text-lg">Meticulously crafted for those who demand excellence.</Text>
       </div>
 
-      <Row gutter={[24, 40]}>
+      <Row gutter={[{ xs: 16, sm: 24 }, { xs: 24, sm: 40 }]}>
         {products.map((product) => (
           <Col xs={24} sm={12} lg={6} key={product.id}>
             <Card

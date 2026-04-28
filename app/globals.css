@@ -1,6 +1,28 @@
-@import "tailwindcss";
-@config "../tailwind.config.ts";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1677ff;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-pulse-blue: pulse-animation 2s infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-animation {
+    0% { box-shadow: 0 0 0 0px rgba(22, 119, 255, 0.4); }
+    100% { box-shadow: 0 0 0 20px rgba(22, 119, 255, 0); }
+  }
+}
 
 /* CSS Variables */
 :root {
@@ -12,7 +34,6 @@
   --primary: #1677ff;
 }
 
-/* Dark mode */
 [data-theme='dark'] {
   --background: #0a0a0a;
   --foreground: #ededed;
@@ -21,14 +42,12 @@
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Base styles */
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--background);
@@ -72,5 +91,15 @@ body {
     background-color: #f9f9f9;
     padding-top: 5rem;
     padding-bottom: 2.5rem;
+  }
+  
+  /* Added responsive helpers since @apply is being problematic in some environments */
+  .hidden-mobile {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .hidden-mobile {
+      display: flex;
+    }
   }
 }

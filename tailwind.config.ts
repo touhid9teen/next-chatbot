@@ -35,8 +35,5 @@ const config: Config = {
     },
   },
   plugins: [],
-  corePlugins: {
-    preflight: false, // Disable Tailwind's reset to avoid conflicts with Ant Design
-  },
 };
 export default config;
