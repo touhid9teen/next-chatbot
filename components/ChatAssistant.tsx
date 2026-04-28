@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { FloatButton, Card, Typography } from 'antd';
-import { MessageOutlined } from '@ant-design/icons';
+import { MessageCircle, X } from 'lucide-react';
 import ChatHeader from './chat/ChatHeader';
 import ChatMessage from './chat/ChatMessage';
 import ChatInput from './chat/ChatInput';
-
-const { Text } = Typography;
 
 interface Message {
   id: number;
@@ -83,80 +80,47 @@ export default function ChatAssistant() {
 
   return (
     <>
-      <div className={`chat-trigger ${!visible ? 'pulse' : ''}`} style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 2000 }}>
+      <div className="fixed right-6 bottom-6 z-[2000]">
         {!visible && (
-          <div style={{
-            position: 'absolute',
-            bottom: '70px',
-            right: 0,
-            background: 'white',
-            padding: '8px 16px',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            whiteSpace: 'nowrap',
-            fontSize: '12px',
-            fontWeight: 600,
-            animation: 'fadeIn 0.5s ease-out'
-          }}>
+          <div className="absolute bottom-[70px] right-0 bg-white px-4 py-2 rounded-xl shadow-lg whitespace-nowrap text-xs font-semibold animate-in fade-in slide-in-from-bottom-2 duration-300">
             👋 Need help finding something?
-            <div style={{
-              position: 'absolute',
-              bottom: '-6px',
-              right: '24px',
-              width: '12px',
-              height: '12px',
-              background: 'white',
-              transform: 'rotate(45deg)'
-            }} />
+            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-white transform rotate-45" />
           </div>
         )}
-        <FloatButton
-          icon={<MessageOutlined />}
-          type="primary"
-          style={{ position: 'static', width: 60, height: 60 }}
+        <button
           onClick={() => setVisible(!visible)}
-          badge={{ dot: true, color: 'green' }}
-        />
+          className={`relative flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-transform hover:scale-105 active:scale-95 duration-200 ${
+            !visible ? 'animate-bounce' : ''
+          }`}
+        >
+          {visible ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+          {!visible && (
+            <span className="absolute top-0 right-0 flex h-3.5 w-3.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-green-500 border-2 border-white"></span>
+            </span>
+          )}
+        </button>
       </div>
 
       {visible && (
-        <Card
-          className="chat-card"
-          style={{
-            position: 'fixed',
-            right: 24,
-            bottom: 100,
-            zIndex: 2000,
-            boxShadow: '0 12px 48px rgba(0,0,0,0.15)',
-            borderRadius: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            padding: 0,
-            transition: 'all 0.3s ease'
-          }}
-          bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
-        >
+        <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-24 z-[2000] w-full sm:w-[380px] h-[100dvh] sm:h-[600px] sm:max-h-[80vh] bg-white sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 sm:slide-in-from-bottom-0 duration-300 border border-gray-100">
           <ChatHeader onClose={() => setVisible(false)} />
 
           <div
             ref={scrollRef}
-            style={{
-              flex: 1,
-              padding: '20px',
-              overflowY: 'auto',
-              background: '#f9f9f9',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px'
-            }}
+            className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col gap-4"
           >
             {messages.map((msg) => (
               <ChatMessage key={msg.id} {...msg} />
             ))}
             {loading && (
-              <div style={{ alignSelf: 'flex-start', background: 'white', padding: '12px 16px', borderRadius: '18px 18px 18px 0', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <Text italic type="secondary">typing...</Text>
+              <div className="self-start bg-white p-3 px-4 rounded-[18px_18px_18px_0] shadow-sm border border-gray-100">
+                <div className="flex gap-1.5 items-center h-4">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></span>
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></span>
+                </div>
               </div>
             )}
           </div>
@@ -167,46 +131,8 @@ export default function ChatAssistant() {
             onSend={handleSend} 
             loading={loading} 
           />
-        </Card>
+        </div>
       )}
-
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .pulse {
-          animation: pulse-animation 2s infinite;
-          border-radius: 50%;
-        }
-        @keyframes pulse-animation {
-          0% { box-shadow: 0 0 0 0px rgba(22, 119, 255, 0.4); }
-          100% { box-shadow: 0 0 0 20px rgba(22, 119, 255, 0); }
-        }
-        .chat-trigger {
-          transition: all 0.3s ease;
-          border-radius: 50%;
-        }
-        .chat-trigger:hover {
-          transform: scale(1.05);
-        }
-        .chat-card {
-          width: 380px;
-          height: 550px;
-        }
-        @media (max-width: 768px) {
-          .chat-card {
-            width: calc(100vw - 40px) !important;
-            height: 60vh !important;
-            right: 20px !important;
-            bottom: 90px !important;
-          }
-          .chat-trigger {
-            right: 20px !important;
-            bottom: 20px !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
