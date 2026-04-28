@@ -1,9 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
+/* CSS Variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -13,6 +12,7 @@
   --primary: #1677ff;
 }
 
+/* Dark mode */
 [data-theme='dark'] {
   --background: #0a0a0a;
   --foreground: #ededed;
@@ -21,12 +21,14 @@
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
+/* Reset */
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
+/* Base styles */
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--background);
@@ -34,38 +36,41 @@ body {
   overflow-x: hidden;
 }
 
-/* Glass Effect Utilities */
+/* Custom component utilities */
 @layer components {
   .glass-nav {
-    @apply transition-all duration-300 ease-in-out z-[1000];
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
     background: transparent;
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
     border-bottom: 1px solid transparent;
   }
-
   .glass-nav.scrolled {
-    @apply backdrop-blur-md border-b shadow-sm;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     background: var(--glass-bg) !important;
     border-color: var(--glass-border) !important;
   }
-  
   .hero-gradient {
-    @apply relative overflow-hidden;
+    position: relative;
+    overflow: hidden;
     background: radial-gradient(circle at 50% 50%, rgba(22, 119, 255, 0.08) 0%, #ffffff 70%);
   }
-
   .product-card {
-    @apply transition-all duration-300 border border-transparent !important;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
   }
-
   .product-card:hover {
-    @apply -translate-y-2 shadow-2xl border-primary !important;
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border-color: var(--primary);
   }
-
   .footer {
-    @apply bg-[#f9f9f9] py-20 pb-10;
+    background-color: #f9f9f9;
+    padding-top: 5rem;
+    padding-bottom: 2.5rem;
   }
 }
-
-/* Custom Keyframes are now in tailwind.config.ts */
