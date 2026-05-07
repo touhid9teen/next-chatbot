@@ -1,21 +1,34 @@
 import { NextResponse } from 'next/server';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+
+const SYSTEM_INSTRUCTION = `You are Elevate AI, a sophisticated and helpful personal shopping assistant for "ELEVATE", a premium lifestyle and technology store. 
+Your goal is to provide expert advice on high-end gadgets and lifestyle products. 
+Keep your responses professional, concise, and helpful. 
+If asked about tracking, mention that users can find it in their account section. 
+If asked about returns, mention the 30-day hassle-free policy. 
+Always maintain a premium, high-end brand tone.`;
 
 export async function POST(request: Request) {
-  const { message } = await request.json();
+  try {
+    const { message } = await request.json();
 
-  // Simulate AI delay
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json({ response: "API Key not configured." }, { status: 500 });
+    }
 
-  // Basic mock response logic
-  let response = "I'm your AI Shopping Assistant. How can I help you today?";
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      systemInstruction: SYSTEM_INSTRUCTION
+    });
 
-  if (message.toLowerCase().includes('track')) {
-    response = "You can track your order by entering your order ID on our 'Support' page. Would you like me to send you the link?";
-  } else if (message.toLowerCase().includes('return')) {
-    response = "We offer a 30-day hassle-free return policy. You can start a return from your 'Account' section.";
-  } else if (message.toLowerCase().includes('hi') || message.toLowerCase().includes('hello')) {
-    response = "Hello! I'm here to help you find the perfect lifestyle gadgets. What are you looking for today?";
+    const result = await model.generateContent(message);
+    const response = result.response.text();
+
+    return NextResponse.json({ response });
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    return NextResponse.json({ response: "I'm sorry, I encountered an error processing your request." }, { status: 500 });
   }
-
-  return NextResponse.json({ response });
 }
