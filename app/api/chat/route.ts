@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+// Forcing v1 version if needed can sometimes be done via the model selection or global config
+// However, the most robust way to fix the 404 is often to use the "models/" prefix explicitly if the SDK is struggling.
 
 const SYSTEM_INSTRUCTION = `You are Elevate AI, a sophisticated and helpful personal shopping assistant for "ELEVATE", a premium lifestyle and technology store. 
 Your goal is to provide expert advice on high-end gadgets and lifestyle products. 
@@ -18,7 +20,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ response: "API Key not configured." }, { status: 500 });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Using gemini-flash-latest as verified by successful curl command
+    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
     const prompt = `${SYSTEM_INSTRUCTION}\n\nUser: ${message}\nAssistant:`;
     const result = await model.generateContent(prompt);
