@@ -25,12 +25,18 @@ export default function Navbar() {
         <div className="text-xl md:text-2xl font-extrabold tracking-tighter text-primary transition-colors duration-300">
           ELEVATE
         </div>
-        <Input
-          prefix={<SearchOutlined className="text-gray-400" />}
-          placeholder="Search..."
-          variant="borderless"
-          className="hidden md:flex w-[200px] lg:w-[300px] rounded-full h-10 transition-all duration-300 bg-black/10 text-black"
-        />
+        <div className="relative flex-1 md:flex-none">
+          <Input
+            prefix={<SearchOutlined className="text-slate-400 mr-1" />}
+            placeholder="Search products..."
+            suffix={
+              <div className="hidden lg:flex items-center gap-1 px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 text-[10px] font-medium text-slate-400 select-none">
+                <span className="text-[12px]">⌘</span>K
+              </div>
+            }
+            className="flex w-full max-w-[160px] md:max-w-[280px] lg:max-w-[400px] rounded-xl h-10 transition-all duration-300 bg-white border border-slate-200 hover:border-primary/50 hover:shadow-sm focus:border-primary focus:shadow-[0_0_0_4px_rgba(22,119,255,0.08)] text-slate-700 font-medium placeholder:text-slate-400 placeholder:font-normal"
+          />
+        </div>
       </div>
 
       <div className="flex items-center gap-2 md:gap-6">
