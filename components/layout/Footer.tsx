@@ -25,30 +25,30 @@ export default function Footer() {
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <Title level={4} className="!mb-6">About</Title>
-          <Space direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Our Story</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Careers</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Press Kit</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Contact Us</Text>
-          </Space>
+          </div>
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <Title level={4} className="!mb-6">Support</Title>
-          <Space direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Help Center</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Shipping Info</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Returns</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Order Status</Text>
-          </Space>
+          </div>
         </Col>
         <Col xs={24} sm={12} lg={6}>
           <Title level={4} className="!mb-6">Policy</Title>
-          <Space direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Privacy Policy</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Terms of Service</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Cookie Policy</Text>
             <Text className="text-gray-500 cursor-pointer hover:text-primary transition-colors">Sustainability</Text>
-          </Space>
+          </div>
         </Col>
       </Row>
       

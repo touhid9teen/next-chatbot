@@ -18,12 +18,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ response: "API Key not configured." }, { status: 500 });
     }
 
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      systemInstruction: SYSTEM_INSTRUCTION
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const result = await model.generateContent(message);
+    const prompt = `${SYSTEM_INSTRUCTION}\n\nUser: ${message}\nAssistant:`;
+    const result = await model.generateContent(prompt);
     const response = result.response.text();
 
     return NextResponse.json({ response });

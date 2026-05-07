@@ -41,7 +41,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-6">
-          <Space size={scrolled ? "small" : "middle"}>
+          <div className={`flex items-center ${scrolled ? 'gap-2' : 'gap-4'}`}>
             <Button
               type="text"
               icon={<UserOutlined className="text-base md:text-xl" />}
@@ -58,7 +58,7 @@ export default function Navbar() {
                 <span className="hidden md:inline">Cart</span>
               </Button>
             </Badge>
-          </Space>
+          </div>
         </div>
       </div>
     </Header>
