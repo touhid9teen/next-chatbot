@@ -17,12 +17,12 @@ export default function ChatInput({ value, onChange, onSend, loading }: ChatInpu
   ];
 
   return (
-    <div className="p-4 bg-white border-t border-gray-100 shrink-0">
-      <div className="flex flex-wrap gap-2 mb-3">
+    <div className="p-5 bg-white border-t border-slate-100 shrink-0">
+      <div className="flex flex-wrap gap-2.5 mb-4">
         {quickActions.map(action => (
           <button
             key={action.label}
-            className="cursor-pointer rounded-full px-3 py-1 flex items-center gap-1.5 text-xs font-medium border border-gray-200 bg-gray-50 text-gray-600 hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer rounded-full px-4 py-1.5 flex items-center gap-2 text-[11px] font-bold tracking-wide uppercase border border-slate-200 bg-slate-50 text-slate-500 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             onClick={() => onSend(action.label)}
             disabled={loading}
           >
@@ -30,10 +30,10 @@ export default function ChatInput({ value, onChange, onSend, loading }: ChatInpu
           </button>
         ))}
       </div>
-      <div className="relative flex items-center">
+      <div className="relative flex items-center group">
         <input
           type="text"
-          placeholder="Ask me anything..."
+          placeholder="Type your message..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={(e) => {
@@ -43,14 +43,14 @@ export default function ChatInput({ value, onChange, onSend, loading }: ChatInpu
             }
           }}
           disabled={loading}
-          className="w-full rounded-full py-2.5 pl-4 pr-12 text-sm bg-white border border-gray-200 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all shadow-sm disabled:opacity-50 disabled:bg-gray-50"
+          className="w-full rounded-2xl py-3.5 pl-5 pr-14 text-sm bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all placeholder:text-slate-400 font-medium"
         />
         <button
           onClick={() => onSend()}
           disabled={!value.trim() || loading}
-          className="absolute right-1.5 w-8 h-8 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors disabled:opacity-50 disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm"
+          className="absolute right-2 w-10 h-10 flex items-center justify-center bg-primary hover:bg-primary/90 text-white rounded-xl transition-all disabled:opacity-50 disabled:bg-slate-300 disabled:cursor-not-allowed shadow-lg shadow-primary/20 active:scale-95"
         >
-          <Send className="w-4 h-4 translate-x-[-1px] translate-y-[1px]" />
+          <Send className="w-5 h-5 translate-x-[-1px] translate-y-[1px]" />
         </button>
       </div>
     </div>

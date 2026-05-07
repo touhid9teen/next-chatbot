@@ -9,22 +9,25 @@ interface ChatHeaderProps {
 
 export default function ChatHeader({ onClose }: ChatHeaderProps) {
   return (
-    <div className="p-4 px-5 bg-blue-600 text-white flex items-center justify-between shadow-md z-10 shrink-0 rounded-t-none sm:rounded-t-2xl">
-      <div className="flex items-center gap-3">
+    <div className="p-8 px-10 bg-primary text-white flex items-center justify-between shadow-lg z-10 shrink-0 rounded-t-none sm:rounded-t-[28px]">
+      <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
-            <Bot className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-inner">
+            <Bot className="w-7 h-7 text-white" />
           </div>
-          <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-blue-600 rounded-full"></div>
+          <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 border-2 border-primary rounded-full shadow-sm"></div>
         </div>
         <div>
-          <h2 className="text-white block leading-none font-bold text-base m-0 mb-1">Elevate AI</h2>
-          <span className="text-blue-100 text-xs font-medium">Always online</span>
+          <h2 className="text-white block leading-none font-bold text-lg m-0 mb-1">Elevate AI</h2>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+            <span className="text-blue-100 text-[11px] font-medium tracking-wide uppercase">Always online</span>
+          </div>
         </div>
       </div>
       <button
         onClick={onClose}
-        className="p-2 rounded-full hover:bg-white/20 transition-colors text-white flex items-center justify-center"
+        className="p-2.5 rounded-full hover:bg-white/10 transition-all text-white/80 hover:text-white flex items-center justify-center"
       >
         <X className="w-5 h-5" />
       </button>
